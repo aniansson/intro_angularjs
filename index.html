@@ -2,21 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js">
-</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
   </head>
   <body>
     <div ng-app="demoApp" ng-controller="mainController">
+      <form ng-submit="addUser()" >
+        <input type="text" ng-model="newUser.firstName" placeholder="First name...">
+        <input type="text" ng-model="newUser.lastName" placeholder="Last name...">
+        <button type="submit">Add</button>
+      </form>
       <div ng-repeat="user in users">
         <hello message="Hi"></hello>
       </div>
     </div>
-    
+
     <script>
       var demoApp = angular.module("demoApp", []);
 
       demoApp.controller("mainController", function($scope, userService) {
         $scope.users = userService.users();
+        $scope.newUser = {}
+        $scope.addUser = function(){
+          userService.add($scope.newUser);
+        }
       });
 
       demoApp.directive("hello", function() {
@@ -40,7 +48,10 @@
           users: function(){
             return collection;
           },
-        };
+          add: function(object){
+            collection.push(object);
+          }
+        }
       });
     </script>
   </body>
