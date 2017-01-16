@@ -11,7 +11,7 @@
         <input type="text" ng-model="newUser.lastName" placeholder="Last name...">
         <button type="submit">Add</button>
       </form>
-      <div ng-repeat="user in users | sortByFirstName">
+      <div ng-repeat="user in users | sortByLastName">
         <hello message="Hi"></hello>
       </div>
     </div>
@@ -55,10 +55,10 @@
         }
       });
 
-      demoApp.filter('sortByFirstName', function () {
+      demoApp.filter('sortByLastName', function () {
         return function (array) {
           function compare(a, b) {
-            return a.firstName.localeCompare(b.firstName)
+            return a.lastName.localeCompare(b.lastName)
           }
           return array.sort(compare);
         }
