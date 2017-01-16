@@ -24,50 +24,58 @@
     <script>
     angular.module("demoApp", []);
 
-      angular.module("demoApp").controller("mainController", function($scope, userService) {
-        $scope.users = userService.users();
-        $scope.newUser = {}
-        $scope.addUser = function(){
+      (function () {
+        angular.module("demoApp").controller("mainController", function($scope, userService) {
+            $scope.users = userService.users();
+            $scope.newUser = {}
+            $scope.addUser = function(){
           userService.add($scope.newUser);
-          $scope.newUser = {}
-        }
-      });
+            $scope.newUser = {}
+          };
+        });
+      })();
 
-      angular.module("demoApp").directive("hello", function() {
-        return {
-          scope: false,
-          link: function($scope, element, attrs){
-            $scope.message = attrs.message;
-          },
-          template:  "<h1> {{[message, user.firstName, user.lastName].join(' ')}}!</h1>"
-        };
-      });
+      (function () {
+          angular.module("demoApp").directive("hello", function() {
+            return {
+              scope: false,
+              link: function($scope, element, attrs){
+                  $scope.message = attrs.message;
+              },
+              template:  "<h1> {{[message, user.firstName, user.lastName].join(' ')}}!</h1>"
+            };
+          });
+        })();
 
-      angular.module("demoApp").service('userService', function(){
-        var collection = [
-          {firstName: 'Philip', lastName: 'Zudemberg'},
-          {firstName: 'Ebba', lastName: 'Aniansson'},
-          {firstName: 'Kristoffer', lastName: 'Karlsson'},
-          {firstName: 'Rodrigo', lastName: 'Munoz'},
-        ];
-        return {
-          users: function(){
-            return collection;
-          },
-          add: function(object){
-            collection.push(object);
-          }
-        }
-      });
+      (function () {
+          angular.module("demoApp").service('userService', function(){
+            var collection = [
+              {firstName: 'Philip', lastName: 'Zudemberg'},
+              {firstName: 'Ebba', lastName: 'Aniansson'},
+              {firstName: 'Kristoffer', lastName: 'Karlsson'},
+              {firstName: 'Rodrigo', lastName: 'Munoz'},
+            ];
+            return {
+              users: function(){
+              return collection;
+              },
+              add: function(object){
+              collection.push(object);
+              }
+            };
+          });
+        })();
 
-     angular.module("demoApp").filter('sortByLastName', function () {
-        return function (array) {
-          function compare(a, b) {
-            return a.lastName.localeCompare(b.lastName)
-          }
-          return array.sort(compare);
-        }
-      });
+      (function () {
+          angular.module("demoApp").filter('sortByLastName', function () {
+            return function (array) {
+              function compare(a, b) {
+              return a.lastName.localeCompare(b.lastName)
+              }
+              return array.sort(compare);
+              }
+          });
+      })();
 
 
     </script>
